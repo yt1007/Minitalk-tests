@@ -1,0 +1,21 @@
+Static variables have the property of preserving their value even after they are out of their scope!
+Hence, a static variable preserves its previous value in its previous scope and is not initialized again in the new scope.
+
+A static variable remains in memory while the program is running.
+A normal or auto variable is destroyed when a function call where the variable was declared is over.
+For example, we can use static int to count the number of times a function is called, but an auto variable can't be used for this purpose.
+
+Static variables are allocated memory in the data segment, not the stack segment.
+
+Static variables (like global variables) are initialized as 0 if not initialized explicitly.
+
+In C, static variables can only be initialized using constand literals.
+
+Static global variables and functions are also possible in C/C++.
+The purpose of these is to limit the scope of a variable or function to a file.
+
+Static variables should not be declared inside a structure.
+The reason is C compiler requires the entire structure elements to be placed together (i.e.) memory allocation for structure members should be contiguous.
+It is possible to declare structure inside the function (stack segment) or allocate memory dynamically (heap segment) or it can be even global (BSS or data segment).
+Whatever might be the case, all structure members should reside in the same memory segment because the value of the structure element is fetched by counting the offset of the element from the beginning address of the structure.
+Separating out one member alone to a data segment defeats the purpose of structure and it is possible to have an entire structure as static.

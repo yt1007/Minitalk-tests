@@ -1,0 +1,10 @@
+input2.txt: 9 8 7 6 5 4 3 2 1 0
+input2.txt: 9 8 7 6 5 4 3 2 1 1
+input2.txt: 9 8 7 6 5 4 3 2 1 2
+input2.txt: 9 8 7 6 5 4 3 2 1 3
+input2.txt: 9 8 7 6 5 4 3 2 1 4
+input2.txt: 9 8 7 6 5 4 3 2 1 5
+input2.txt: 9 8 7 6 5 4 3 2 1 6
+input2.txt: 9 8 7 6 5 4 3 2 1 7
+input2.txt: 9 8 7 6 5 4 3 2 1 8
+input2.txt: 9 8 7 6 5 4 3 2 1 9
