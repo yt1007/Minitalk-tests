@@ -6,7 +6,7 @@
 #    By: yetay <yetay@student.42kl.edu.my>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/11 14:27:43 by yetay             #+#    #+#              #
-#    Updated: 2023/09/12 07:54:13 by yetay            ###   ########.fr        #
+#    Updated: 2023/09/12 08:05:39 by yetay            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,7 +61,7 @@ export B;
 ## Norminette
 cd ${MT_DIR};
 echo -ne "${BL}Running norminette on *.h and *.c files${NC}... ";
-bash ${WD}/tests/norm_c.sh > norminette.out;
+bash ${WD}/tests/auto_norm.sh > norminette.out;
 EC=$?;
 if [[ ${EC} -eq 0 && $(cat ${MT_DIR}/norminette.out | grep -c -v ": OK!") -eq 0 ]];
 then
