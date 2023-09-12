@@ -6,7 +6,7 @@
 #    By: yetay <yetay@student.42kl.edu.my>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/12 08:22:11 by yetay             #+#    #+#              #
-#    Updated: 2023/09/12 09:50:42 by yetay            ###   ########.fr        #
+#    Updated: 2023/09/12 12:45:53 by yetay            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,10 +71,12 @@ fi;
 ## General instructions (Bonus)
 if [[ ${B} -eq 1 ]];
 then
+	SCORE=0;
 	make fclean >/dev/null 2>&1;
 	make bonus >/dev/null 2>&1;
 	if [[ -e server && -e client ]];
 	then
+		SCORE=$[${SCORE} + 1];
 		echo -e "Makefile compiles both executables, B${GR}+1${NC} ";
 	else
 		echo -ne "Makefile does not compile ";
@@ -97,6 +99,7 @@ then
 	ps x | grep -w "\.\/server" | awk '{print $1}' >serv_psid;
 	if [[ $(grep -cwf serv_psid serv_pid) -ne 0 ]];
 	then
+		SCORE=$[${SCORE} + 2];
 		echo -e "Server is server, and prints PID, B${GR}+2${NC} ";
 		EC=0;
 	else
@@ -108,12 +111,14 @@ then
 	EC=$?;
 	if [[ ${EC} -eq 0  && $(grep -c "General instructions test" serv_pid) -eq 1 ]];
 	then
+		SCORE=$[${SCORE} + 2];
 		echo -e "Client is client, and takes 2 params, B${GR}+2${NC} ";
 	else
 		echo -e "Client does not work expectedly";
 	fi;
 	(kill -INT $(grep -owf serv_psid serv_pid)) >/dev/null 2>&1;
 	rm serv_psid serv_pid;
+	echo -e "                                               Bonus Score=${SCORE}";
 fi;
 
 ## Goodbye
