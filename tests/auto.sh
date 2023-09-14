@@ -6,7 +6,7 @@
 #    By: yetay <yetay@student.42kl.edu.my>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/11 14:27:43 by yetay             #+#    #+#              #
-#    Updated: 2023/09/14 12:16:43 by yetay            ###   ########.fr        #
+#    Updated: 2023/09/14 17:58:59 by yetay            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -96,6 +96,17 @@ fi;
 ## Message transmission
 echo -ne "${BL}Checking message transmissions${NC}... ";
 bash ${WD}/tests/message_transmissions.sh;
+EC=$?;
+if [[ ${EC} -eq 0 ]];
+then
+	echo -e "${GR}OK${NC}.";
+else
+	echo -e "${RD}KO${NC}.";
+fi;
+
+## Simple setup
+echo -e "${BL}Checking simple setup${NC}... ";
+bash ${WD}/tests/simple_setup.sh;
 EC=$?;
 if [[ ${EC} -eq 0 ]];
 then
