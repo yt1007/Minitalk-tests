@@ -6,7 +6,7 @@
 #    By: yetay <yetay@student.42kl.edu.my>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/12 13:07:26 by yetay             #+#    #+#              #
-#    Updated: 2023/09/14 17:45:25 by yetay            ###   ########.fr        #
+#    Updated: 2023/09/14 17:52:42 by yetay            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,16 +51,19 @@ then
 		# Compare server output with the client output
 		cat -e serv_pid | sed "s/\$$//" | sed "s/\^@$//" \
 			| grep -vw "$server" > output.tmp;
-		if [[ ${EC} -ne 0 || "$(diff input.tmp output.tmp)" ]];
-		then
-			echo -ne "Message not identical ";
-			echo;
-			echo "Input";
-			cat input.tmp;
-			echo;
-			echo "Output";
-			cat output.tmp;
-			exit 1;
+		if [[ ${EC} -ne 0 ]];
+			echo -ne " ";
+			if [[ "$(diff input.tmp output.tmp)" ]];
+			then
+				echo -ne "Message not identical ";
+				echo;
+				echo "Input";
+				cat input.tmp;
+				echo;
+				echo "Output";
+				cat output.tmp;
+				exit 1;
+			fi;
 		fi;
 
 		# Clean-up
