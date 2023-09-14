@@ -6,7 +6,7 @@
 #    By: yetay <yetay@student.42kl.edu.my>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/12 08:22:11 by yetay             #+#    #+#              #
-#    Updated: 2023/09/12 12:45:53 by yetay            ###   ########.fr        #
+#    Updated: 2023/09/14 14:30:06 by yetay            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,7 @@ then
 		echo;
 		EC=1;
 	fi;
-	nohup ./server >serv_pid & echo -n;
+	(set +m; nohup ./server >serv_pid 2>/dev/null &);
 	ps x | grep -w "\.\/server" | awk '{print $1}' >serv_psid;
 	if [[ $(grep -cwf serv_psid serv_pid) -ne 0 ]];
 	then
@@ -56,6 +56,7 @@ then
 	serv=$(grep -owf serv_psid serv_pid);
 	./client ${serv} "General instructions test";
 	EC=$?;
+	(set +m; kill -TERM ${serv}) >/dev/null 2>&1;
 	if [[ ${EC} -eq 0  && $(grep -c "General instructions test" serv_pid) -eq 1 ]];
 	then
 		SCORE=$[${SCORE} + 2];
@@ -63,7 +64,6 @@ then
 	else
 		echo -e "Client does not work expectedly";
 	fi;
-	(kill -INT ${serv}) >/dev/null 2>&1;
 	rm serv_psid serv_pid;
 	echo -e "                                           Mandatory Score=${SCORE}";
 fi;
@@ -95,7 +95,7 @@ then
 		echo
 		EC=1;
 	fi;
-	nohup ./server >serv_pid & echo -n;
+	(set +m; nohup ./server >serv_pid 2>/dev/null &);
 	ps x | grep -w "\.\/server" | awk '{print $1}' >serv_psid;
 	if [[ $(grep -cwf serv_psid serv_pid) -ne 0 ]];
 	then
@@ -109,6 +109,7 @@ then
 	serv=$(grep -owf serv_psid serv_pid);
 	./client ${serv} "General instructions test";
 	EC=$?;
+	(set +m; kill -TERM ${serv}) >/dev/null 2>&1;
 	if [[ ${EC} -eq 0  && $(grep -c "General instructions test" serv_pid) -eq 1 ]];
 	then
 		SCORE=$[${SCORE} + 2];
@@ -116,7 +117,6 @@ then
 	else
 		echo -e "Client does not work expectedly";
 	fi;
-	(kill -INT $(grep -owf serv_psid serv_pid)) >/dev/null 2>&1;
 	rm serv_psid serv_pid;
 	echo -e "                                               Bonus Score=${SCORE}";
 fi;
