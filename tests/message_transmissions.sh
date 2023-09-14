@@ -6,7 +6,7 @@
 #    By: yetay <yetay@student.42kl.edu.my>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/12 13:07:26 by yetay             #+#    #+#              #
-#    Updated: 2023/09/14 14:29:36 by yetay            ###   ########.fr        #
+#    Updated: 2023/09/14 16:48:24 by yetay            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,22 +23,24 @@ then
 	(set +m; nohup ./server >serv_pid 2>/dev/null &);
 	ps x | grep -w "\.\/server" | awk '{print $1}' >serv_psid;
 	export server=$(grep -owf serv_psid serv_pid);
-	bash ${WD}/tests/send_lines_from_file.sh ${WD}/input/1.txt;
+	sort -R ${WD}/input/0.txt | head -n 5 > input.tmp;
+	bash ${WD}/tests/send_lines_from_file.sh input.tmp;
 	EC=$?;
 	(set +m; kill -TERM ${server}) >/dev/null 2>&1;
-	cat -e serv_pid | sed "s/\$$//" | sed "s/\^@$//" | grep -vw "$server" > tmp;
-	if [[ ${EC} -ne 0 || "$(diff ${WD}/input/1.txt tmp)" ]];
+	cat -e serv_pid | sed "s/\$$//" | sed "s/\^@$//" \
+		| grep -vw "$server" > output.tmp;
+	if [[ ${EC} -ne 0 || "$(diff input.tmp output.tmp)" ]];
 	then
 		echo -ne "Message not identical ";
 		echo;
 		echo "Input";
-		cat ${WD}/input/1.txt;
+		cat input.tmp;
 		echo;
 		echo "Output";
-		cat tmp;
+		cat output.tmp;
 		exit 1;
 	fi;
-   	rm tmp serv_psid serv_pid;
+   	rm input.tmp output.tmp serv_psid serv_pid;
 fi;
 
 ## Goodbye
