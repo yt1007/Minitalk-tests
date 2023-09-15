@@ -6,7 +6,7 @@
 #    By: yetay <yetay@student.42kl.edu.my>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/14 17:22:28 by yetay             #+#    #+#              #
-#    Updated: 2023/09/15 11:11:04 by yetay            ###   ########.fr        #
+#    Updated: 2023/09/15 13:33:28 by yetay            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -102,6 +102,8 @@ then
 	else
 		echo -e "Only SIGUSR1 and SIGUSR2 were used with kill, ${GR}+3${NC}";
 	fi;
+	# Clean-up
+	rm kill_sig.lst;
 fi;
 
 ## Goodbye
