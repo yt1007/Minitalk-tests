@@ -6,7 +6,7 @@
 #    By: yetay <yetay@student.42kl.edu.my>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/11 14:27:43 by yetay             #+#    #+#              #
-#    Updated: 2023/09/15 09:19:30 by yetay            ###   ########.fr        #
+#    Updated: 2023/09/15 14:10:16 by yetay            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,10 +44,10 @@ M=0;
 B=0;
 if [[ "$1" ]];
 then
-	if [[ "$1" == "M" ]];
+	if [[ "$1" == "m" ]];
 	then
 		M=1;
-	elif [[ "$1" == "B" ]];
+	elif [[ "$1" == "b" ]];
 	then
 		B=1;
 	fi;
@@ -116,14 +116,17 @@ else
 fi;
 
 ## Unicode character support
-echo -ne "${BL}Checking unicode support${NC}... ";
-bash ${WD}/tests/unicode.sh
-EC=$?;
-if [[ ${EC} -eq 0 ]];
+if [[ ${B} -eq 1 ]];
 then
-	echo -e "${GR}OK${NC}.";
-else
-	echo -e "${RD}KO${NC}.";
+	echo -ne "${BL}Checking unicode support${NC}... ";
+	bash ${WD}/tests/unicode.sh
+	EC=$?;
+	if [[ ${EC} -eq 0 ]];
+	then
+		echo -e "${GR}OK${NC}.";
+	else
+		echo -e "${RD}KO${NC}.";
+	fi;
 fi;
 
 exit $EC;
