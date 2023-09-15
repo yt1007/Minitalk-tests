@@ -6,7 +6,7 @@
 #    By: yetay <yetay@student.42kl.edu.my>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/12 13:07:26 by yetay             #+#    #+#              #
-#    Updated: 2023/09/15 10:31:36 by yetay            ###   ########.fr        #
+#    Updated: 2023/09/15 13:28:41 by yetay            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,17 +53,18 @@ then
 		if [[ ${EC} -ne 0 ]];
 		then
 			echo -ne " ";
-			if [[ "$(diff input.tmp output.tmp)" ]];
-			then
-				echo -ne "Message not identical ";
-				echo;
-				echo "Input";
-				cat input.tmp;
-				echo;
-				echo "Output";
-				cat output.tmp;
-				exit 1;
-			fi;
+		fi;
+		if [[ "$(diff input.tmp output.tmp)" ]];
+		then
+			echo -ne "Message not identical ";
+			echo;
+			echo "Input";
+			cat input.tmp;
+			echo;
+			echo "Output";
+			cat output.tmp;
+			exit 1;
+			EC=1;
 		fi;
 
 		# Clean-up
@@ -72,4 +73,4 @@ then
 fi;
 
 ## Goodbye
-exit 0;
+exit ${EC};
