@@ -6,7 +6,7 @@
 #    By: yetay <yetay@student.42kl.edu.my>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/14 17:22:28 by yetay             #+#    #+#              #
-#    Updated: 2023/09/14 18:47:52 by yetay            ###   ########.fr        #
+#    Updated: 2023/09/15 11:11:04 by yetay            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,25 +46,26 @@ then
 	(set +m; kill -TERM ${server}) >/dev/null 2>&1;
 
 	# Compare server output with the client output
-	cat -e serv_pid | sed "s/\$$//" | sed "s/\^@$//" \
-		| grep -vw "$server" > output.tmp;
+	cat serv_pid | grep -vw "$server" > output.tmp;
 	if [[ ${EC} -ne 0 ]];
 	then
 		echo -ne " ";
-		if [[ "$(diff input.tmp output.tmp)" ]];
-		then
-			echo -ne "Message not identical ";
-			echo;
-			echo "Input";
-			cat input.tmp;
-			echo;
-			echo "Output";
-			cat output.tmp;
-		fi;
+	else
+		echo -ne "Server can receive multiple strings without restart, ";
+		echo -e "${GR}+1${NC}";
+		SCORE=$[${SCORE} + 1];
 	fi;
-	echo -ne "Server can receive multiple strings without restart, ";
-	echo -e "${GR}+1${NC}";
-	SCORE=$[${SCORE} + 1];
+	if [[ "$(diff input.tmp output.tmp)" ]];
+	then
+		echo -ne "Message not identical ";
+		echo;
+		echo "Input";
+		cat input.tmp;
+		echo;
+		echo "Output";
+		cat output.tmp;
+		EC=1;
+	fi;
 
 	# Clean-up
    	rm input.tmp output.tmp serv_psid serv_pid;
@@ -105,32 +106,3 @@ fi;
 
 ## Goodbye
 exit $EC;
-
-	if [[ $(grep -cwf serv_psid serv_pid) -ne 0 ]];
-	then
-		SCORE=$[${SCORE} + 2];
-		echo -e "Server is server, and prints PID, M${GR}+2${NC} ";
-		EC=0;
-	else
-		echo -e "Server does not print PID";
-		EC=1;
-	fi;
-	serv=$(grep -owf serv_psid serv_pid);
-	./client ${serv} "General instructions test";
-	EC=$?;
-	(set +m; kill -TERM ${serv}) >/dev/null 2>&1;
-	if [[ ${EC} -eq 0  && $(grep -c "General instructions test" serv_pid) -eq 1 ]];
-	then
-		SCORE=$[${SCORE} + 2];
-		echo -e "Client is client, and takes 2 params, M${GR}+2${NC} ";
-	else
-		echo -e "Client does not work expectedly";
-	fi;
-	rm serv_psid serv_pid;
-	echo -ne "                                           ";
-	if [[ $SCORE -eq 0 ]]; then
-		echo -ne "${RD}";
-	else
-		echo -ne "${GR}";
-	fi;
-	echo -e "Mandatory Score=${SCORE}${NC}";
