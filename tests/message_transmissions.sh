@@ -6,7 +6,7 @@
 #    By: yetay <yetay@student.42kl.edu.my>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/12 13:07:26 by yetay             #+#    #+#              #
-#    Updated: 2023/09/14 17:56:01 by yetay            ###   ########.fr        #
+#    Updated: 2023/09/15 10:31:36 by yetay            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,8 +49,7 @@ then
 		(set +m; kill -TERM ${server}) >/dev/null 2>&1;
 
 		# Compare server output with the client output
-		cat -e serv_pid | sed "s/\$$//" | sed "s/\^@$//" \
-			| grep -vw "$server" > output.tmp;
+		cat serv_pid | grep -vw "$server" > output.tmp;
 		if [[ ${EC} -ne 0 ]];
 		then
 			echo -ne " ";
